@@ -84,3 +84,6 @@ Recommended usage:
 1. Create a new repository from the template.
 2. Fill `docs/project-spec.md`, `docs/architecture.md`, and `docs/tasks.md`.
 3. Apply the standards defined in this repository.
+
+---
+*Maintained by [Chinmay Jog](https://github.com/chinmaymjog) | 📖 [Read my articles on Medium](https://medium.com/@chinmaymjog)*
