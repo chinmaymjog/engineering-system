@@ -1,22 +1,46 @@
-# OS
+# OS generated files
 .DS_Store
+Thumbs.db
 
-# Editor
+# Editor and IDE
 .vscode/
 .idea/
 
 # Logs
 *.log
+logs/
+**/logs/
+**/log/
 
-# Env files
+# Environment and secrets
 .env
 .env.*
 !.env.example
+.env.backup.*
 
-# Build artifacts
+# Certificates and keys
+**/certs/
+**/*.pem
+**/*.crt
+**/*.key
+
+# Build and test artifacts
 dist/
 build/
 coverage/
+.cache/
+.pytest_cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Node
+node_modules/
 
 # Terraform
 **/.terraform/*
@@ -28,11 +52,3 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 .terraform.lock.hcl
-
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-
-# Node
-node_modules/
