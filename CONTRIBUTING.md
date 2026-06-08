@@ -1,36 +1,32 @@
 # Contributing
 
-Use this repository to evolve shared engineering standards and workflow guidance.
+This repo is mainly a public snapshot of how I like to work.
 
-## Workflow
+If I change it, I usually try to keep the updates:
 
-1. Create a short-lived branch from `main` using `feature/*`, `bugfix/*`, or `hotfix/*`.
-2. Keep the change scoped to one objective.
-3. Use Conventional Commits such as `docs: update repo standards` or `chore: standardize gitignore baseline`.
-4. Validate the affected docs or standards before opening a Pull Request.
-5. Open a Pull Request with a short summary, related context, and validation performed.
+- small
+- practical
+- grounded in real usage
 
-## Repo-Specific Guidance
+## What Changes Well Here
 
-- Keep guidance generic enough to apply across multiple project types.
-- Update [repo-standards.md](/Users/chinmayjog/repos/personal/engineering-system/repo-standards.md) when branching, PR, or release expectations change.
-- Prefer small, incremental improvements over large process rewrites.
+- clearer wording
+- simpler defaults
+- better alignment with how I actually build
+- less ceremony where ceremony is not helping
 
-## Guardrails
+## What I Try To Avoid
 
-- Do not commit directly to `main`.
-- Do not commit secrets, credentials, or environment files with real values.
-- Do not change standards and examples in unrelated ways in the same PR.
+- turning this into a generic enterprise framework
+- adding process for imagined teams instead of real usage
+- over-explaining things I only need as lightweight working notes
 
 ## Validation
 
-Before opening a Pull Request:
+When I update this repo, I usually ask:
 
-- review the diff for scope
-- confirm no secrets are included
-- ensure documentation changes are accurate
+- does this still feel like how I actually work
+- did I make it clearer or just longer
+- does it help me stay in control while using AI
 
-## Documentation Updates
-
-- Update README usage notes when the recommended workflow changes.
-- Keep examples and repository shape guidance aligned with the companion template repo.
+That is the main bar.
