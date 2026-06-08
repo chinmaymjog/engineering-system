@@ -1,315 +1,97 @@
-# Standards
+# Repo Standards
 
-## Purpose
+These are not strict rules for every repo.
 
-This document defines the engineering practices used across the project. The goal is to maintain code quality, predictable releases, fast onboarding, and support a trunk-based development workflow.
+They are the habits I keep coming back to because they help me work well with AI without turning the codebase into chaos.
 
-## Operating Model
+## What I Care About
 
-These standards assume an AI-assisted workflow with clear human ownership:
+- clear scope before broad implementation
+- small enough changes that I can still review them properly
+- enough documentation to preserve context
+- enough validation to trust the result
+- not letting AI quietly widen the problem
 
-* AI assists implementation and review speed.
-* Engineers own architecture, risk decisions, and final approval.
-* Work should be task-scoped and constraint-driven.
+## Branching
 
-## AI Guardrails
+I usually prefer:
 
-For any AI-assisted task:
+- `main` as the stable branch
+- short-lived feature or fix branches
+- small, focused changes
 
-* Require a plan before implementation.
-* Define explicit allowed and disallowed change scope.
-* Review every generated diff before merge.
-* Do not allow autonomous infrastructure, CI/CD, or architecture redesign actions.
+I do not care about policing branch names for the sake of it. I care that the branch represents one clear piece of work.
 
-## Terminology
+## Commits
 
-* This document uses Pull Request (PR) as the standard term.
-* In GitLab, PR maps to Merge Request (MR).
-
----
-
-# Branching Strategy
-
-## Overview
-
-This project follows Trunk-Based Development (TBD).
-
-### Branches
-
-* `main` – Production-ready code
-* `feature/*` – New features
-* `bugfix/*` – Defect fixes
-* `hotfix/*` – Critical production fixes
-
-Examples:
+I generally use Conventional Commits because they keep history readable:
 
 ```text
-feature/project-onboarding-api
-feature/gitlab-provisioning
-bugfix/database-timeout
-hotfix/authentication-failure
+feat: add cluster bootstrap check
+fix: handle missing workload identity binding
+docs: update deployment notes
 ```
 
-## Rules
+If I drift from that occasionally, it is not the end of the world. The point is clarity, not ceremony.
 
-* Direct commits to `main` are prohibited.
-* All changes must be submitted through a Pull Request (PR).
-* Feature branches should be short-lived (typically less than 2 days).
-* Keep changes focused on a single issue or feature.
-* Rebase frequently to stay current with `main`.
-* Avoid batching unrelated changes in one branch.
+## Reviews
 
----
+My review standard is simple:
 
-# Commit Message Convention
+- can I understand the change quickly
+- is the scope still what I intended
+- did AI make hidden decisions for me
+- do I have enough validation to trust it
 
-This project uses Conventional Commits.
+For infra and platform work, I slow down more here than I do for normal app code.
 
-## Format
+## Docs
 
-```text
-<type>: <short description>
-```
+I like having a few predictable files:
 
-Examples:
+- `docs/project-spec.md`
+- `docs/architecture.md`
+- `docs/ai-rules.md`
+- `docs/tasks.md`
 
-```text
-feat: add project creation API
-feat: implement GitLab repository provisioning
-fix: resolve namespace validation error
-docs: update onboarding workflow
-refactor: simplify database provisioning service
-test: add integration tests for project creation
-chore: update dependencies
-```
+Not every repo needs all of them to be fully developed on day one.
 
-## Allowed Types
+I just want enough written down so the next AI pass does not start from nothing.
 
-| Type     | Purpose                    |
-| -------- | -------------------------- |
-| feat     | New functionality          |
-| fix      | Bug fixes                  |
-| docs     | Documentation              |
-| refactor | Internal code improvements |
-| test     | Testing                    |
-| chore    | Maintenance tasks          |
-| ci       | CI/CD changes              |
+## Scripts And CI
 
-## Guidelines
+I prefer to keep things as simple as possible.
 
-* Use present tense.
-* Keep subject concise.
-* Keep the first line under 72 characters.
-* Avoid generic messages such as:
+Usually that means:
 
-  * update
-  * fix stuff
-  * changes
+- use scripts when scripts are enough
+- add GitLab CI only when deploy/test automation is genuinely useful
+- keep host-specific files thin
 
----
+I do not want CI to become theater.
 
-# Code Review Expectations
+## Riskier Work
 
-## Objectives
+I naturally review more carefully when a change touches:
 
-Code review exists to:
+- infrastructure
+- CI/CD
+- auth
+- secrets
+- migrations
+- deploy or release flows
 
-* Improve code quality
-* Share knowledge
-* Identify defects early
-* Ensure consistency
+That does not mean “never let AI touch it.”
 
-## Reviewer Checklist
+It means I want clearer scope, better review, and better validation.
 
-Reviewers should verify:
+## Practical Definition of Done
 
-### Functionality
+For me, a task is usually done when:
 
-* Does the code solve the intended problem?
-* Are edge cases considered?
+- the change does what I wanted
+- the diff is understandable
+- the validation is good enough for the risk
+- the docs are updated if they need to be
 
-### Maintainability
-
-* Is the code easy to understand?
-* Is duplication minimized?
-
-### Security
-
-* Are secrets excluded?
-* Is input validation implemented?
-
-### Testing
-
-* Are tests included where appropriate?
-* Do tests cover critical paths?
-
-### Documentation
-
-* Has documentation been updated if required?
-
-## Review Standards
-
-* Review the code, not the author.
-* Provide constructive feedback.
-* Explain reasoning behind requested changes.
-* Approve only when comfortable supporting the code in production.
-
----
-
-# Pull Request Workflow
-
-## Development Process
-
-```text
-Issue
-  ↓
-Feature Branch
-  ↓
-Development
-  ↓
-Commit
-  ↓
-Pull Request
-  ↓
-Code Review
-  ↓
-Merge
-  ↓
-Deploy Staging
-  ↓
-UAT
-  ↓
-Production Release
-```
-
-## Creating a Pull Request
-
-Every PR should include:
-
-### Summary
-
-What was implemented?
-
-### Related Issue
-
-Reference the associated issue.
-
-Example:
-
-```text
-Closes #42
-```
-
-### Testing Performed
-
-Describe:
-
-* Unit tests
-* Integration tests
-* Manual validation
-
-### Screenshots
-
-Include UI screenshots when applicable.
-
-## PR Size Guidelines
-
-Preferred:
-
-* Less than 500 lines changed
-* One objective per PR
-
-Avoid:
-
-* Large multi-feature PRs
-* Mixing refactoring with new functionality
-
-## Merge Requirements
-
-Before merge:
-
-* CI pipeline passes
-* Review completed
-* Documentation updated if necessary
-* No unresolved comments
-* Rollback path is clear for high-risk changes
-
----
-
-# Deployment Workflow
-
-## Review Environment
-
-Every Pull Request may deploy to a temporary review environment.
-
-Purpose:
-
-* Functional validation
-* UI review
-* Early testing
-
-## Staging
-
-After merge to `main`:
-
-```text
-main
-  ↓
-Deploy Staging
-```
-
-Staging should closely match production.
-
-## Production
-
-Production deployment requires:
-
-* Successful staging validation
-* UAT completion
-* Approval
-
-Release process:
-
-```text
-Build Artifact
-  ↓
-Deploy Staging
-  ↓
-UAT
-  ↓
-Create Release Tag
-  ↓
-Deploy Production
-```
-
-## Rollback
-
-Rollback should redeploy the previous known-good artifact.
-
-Do not rebuild old code for rollback.
-
-Rollback procedure should be documented and tested for critical systems.
-
-Example:
-
-```text
-v1.0.5
-↓
-Rollback
-↓
-v1.0.4
-```
-
----
-
-# Definition of Done
-
-A task is considered complete when:
-
-* Code is implemented
-* Tests pass
-* Code review completed
-* Documentation updated
-* CI pipeline successful
-* Ready for deployment
-* Scope boundaries were respected
+That is enough.

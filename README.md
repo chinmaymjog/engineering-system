@@ -1,89 +1,112 @@
 # Engineering System
 
-This repository defines a reusable engineering system for software and infrastructure projects.
+This repo is a snapshot of how I like to work with AI when building infrastructure, platform tooling, and small internal apps.
 
-The objective is simple: keep delivery speed high without sacrificing architectural quality, ownership, or learning.
+It is not meant to be a heavy process framework. It is a lightweight working system that helps me stay fast without losing control of scope, architecture, and risk.
 
-## Core Position
+## Core Idea
 
-AI is an implementation accelerator, not an autonomous owner.
+I use AI as a planning and implementation partner.
 
-Decision ownership remains with the engineer.
+I still own:
 
-## Principles
+- what problem I am solving
+- what trade-offs I accept
+- what I merge
+- what I deploy
 
-- AI assists, human decides.
-- Plan before implementation.
-- One scoped task at a time.
-- Review every diff before merge.
-- Markdown docs are the source of truth.
-- No autonomous infrastructure actions.
-- No architecture redesign without explicit approval.
-- Stable process over tool churn.
+## What I Optimize For
 
-## Standard Project Shape
+- fast iteration
+- clear scope
+- visible reasoning
+- small diffs
+- enough documentation to avoid rethinking the same decisions
+- a workflow that works on GitHub and GitLab
 
-Use a consistent repository structure so planning, execution, and onboarding stay predictable.
+## What This Repo Contains
+
+1. [`AI-RULES.md`](AI-RULES.md)
+   My default way of working with AI.
+2. [`PROJECT-PROFILES.md`](PROJECT-PROFILES.md)
+   The repo shapes I use most often.
+3. [`repo-standards.md`](repo-standards.md)
+   Shared habits I prefer across repos.
+4. Companion template
+   A starter repo with the docs and structure I usually want.
+
+## Default Repo Shape
+
+I usually want a repo to look roughly like this:
 
 ```text
 project-root/
-|
+|-- config/
 |-- docs/
-|   |-- project-spec.md
+|   |-- ai-rules.md
 |   |-- architecture.md
+|   |-- project-spec.md
 |   `-- tasks.md
-|
-|-- src/
 |-- infra/
 |-- scripts/
+|-- src/
+|-- tests/
 |-- README.md
 `-- .gitignore
 ```
 
-## Delivery Loop
+Not every repo needs every folder. The point is to have a predictable place for context, decisions, and execution notes.
 
-Every change follows this sequence:
+## How I Usually Work
 
-```text
-Plan -> Implement -> Review diff -> Validate architecture -> Continue
-```
-
-This is mandatory for high-blast-radius areas, including infrastructure, CI/CD, and platform automation.
-
-## AI Task Framing
-
-Prefer constrained prompts over open-ended requests.
+My default loop is:
 
 ```text
-Implement task 2 only.
-
-Allowed:
-- modify Helm manifests
-
-Not allowed:
-- CI/CD changes
-- Terraform changes
-- new dependencies
-
-Explain plan before coding.
-Wait for approval.
+frame -> plan -> build -> review -> validate
 ```
 
-## Standards Reference
+For larger or riskier work, I lean more on docs and review.
 
-Process standards for branching, commits, pull requests, reviews, deployment, and release quality gates are defined in [repo-standards.md](repo-standards.md).
+For smaller work, I keep it light.
+
+## GitHub And GitLab
+
+I work across both, but not in the same way.
+
+- GitHub repos are often script-first
+- GitLab repos sometimes need deploy and test pipelines
+
+So I do not want the system to assume every repo needs CI/CD from day one.
+
+## AI Control Surfaces
+
+These are the files I rely on most when using AI:
+
+- `docs/project-spec.md`
+- `docs/architecture.md`
+- `docs/ai-rules.md`
+- `docs/tasks.md`
+
+I do not need all of them to be perfect before starting. I just want enough written down so the AI and I are working against the same boundaries.
 
 ## Companion Template
 
-Use the companion template repository to start new projects with this system pre-wired:
+Use the companion template when starting a new repo:
 
-- GitHub: https://github.com/chinmaymjog/project-template
+1. Create from the template.
+2. Pick the profile that feels closest.
+3. Fill only the docs that are useful for the project.
+4. Keep or remove folders based on actual need.
+5. Add scripts people can run after cloning if that is enough.
+6. Add or keep GitLab CI only when the project really needs deploy/test automation.
 
-Recommended usage:
+## What This Is Not
 
-1. Create a new repository from the template.
-2. Fill `docs/project-spec.md`, `docs/architecture.md`, and `docs/tasks.md`.
-3. Apply the standards defined in this repository.
+This is not:
 
----
-*Maintained by [Chinmay Jog](https://github.com/chinmaymjog) | 📖 [Read my articles on Medium](https://medium.com/@chinmaymjog)*
+- a strict methodology
+- a compliance framework
+- a generic enterprise standard
+- a claim that every repo needs the same amount of process
+
+It is just the working system I prefer.
